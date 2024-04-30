@@ -1,0 +1,6 @@
+/docs
+/node_modules
+/playtts
+/dist
+package-lock.json
+pnpm-lock.yaml

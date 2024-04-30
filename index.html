@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Report</title>
+</head>
+<body>
+  <script>
+
+    const report = (msg) => {
+
+      console.log('msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg', msg);
+
+      // const xhr = new XMLHttpRequest()
+
+      // xhr.open('get', 'https://szrtest.itomx.cn/log-api/error/report')
+
+      // xhr.send("event=" + encodeURIComponent(JSON.stringify({
+      //   resourceType: 'message error',
+      //   url: 'test',
+      //   outerHTML: 'test',
+      //   msg,
+      //   timeStamp: 'test'
+      // })))
+
+      navigator.sendBeacon('https://szrtest.itomx.cn/log-api/error/report?event=' + encodeURIComponent(JSON.stringify({
+        resourceType: 'message error',
+        url: 'test',
+        outerHTML: 'test',
+        msg,
+        timeStamp: 'test'
+      })))
+
+    }
+
+    let flag = false
+
+    window.addEventListener("beforeUnload", () => {
+      flag = false
+    });
+
+
+    window.addEventListener("visibilitychange", () => {
+      console.log('document.visibilityState', document.visibilityState);
+      debugger
+      if (document.visibilityState === "hidden") {
+        flag = true
+      }
+    });
+
+    window.addEventListener("unload", () => {
+      if (flag) {
+        console.log('关闭')
+        report('关闭')
+      } else {
+        console.log('刷新')
+        report('刷新')
+      }
+    });
+
+  </script>
+</body>
+</html>
